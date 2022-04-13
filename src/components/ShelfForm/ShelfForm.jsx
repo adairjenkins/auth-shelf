@@ -13,6 +13,7 @@ function ShelfForm() {
         dispatch({type: 'ADD_ITEM', payload: {description: newItem, image_url: newPicture }})
         // console.log('Add', newItem);
         setNewItem('');
+        setNewPicture('');
     }
 
     return (

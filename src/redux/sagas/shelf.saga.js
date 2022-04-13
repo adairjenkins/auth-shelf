@@ -5,7 +5,7 @@ import { takeEvery, put } from "redux-saga/effects";
 function* addItem(action) {
     try {
         yield axios.post('/api/shelf', action.payload)
-        // yield put({type: 'GET_SHELF'});
+        yield put({type: 'GET_SHELF'});
 
     } catch (error) {
         console.log(error);
