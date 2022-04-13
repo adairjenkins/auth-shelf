@@ -1,6 +1,5 @@
 import axios from 'axios';
-import { put, takeLatest } from 'redux-saga/effects';
-
+import { put, takeEvery } from 'redux-saga/effects';
 
 function* getShelf() {
 
@@ -13,8 +12,19 @@ function* getShelf() {
 
 }
 
-function* shelfSaga() {
-  yield takeLatest('GET_SHELF', getShelf);
+function* addItem(action) {
+    try {
+        yield axios.post('/api/shelf', action.payload)
+        yield put({type: 'GET_SHELF'});
+
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+function* shelfSaga (){
+    yield takeEvery('ADD_ITEM', addItem)
+    yield takeEvery('GET_SHELF', getShelf);
 }
 
 export default shelfSaga;
