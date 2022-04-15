@@ -13,18 +13,30 @@ function* getShelf() {
 }
 
 function* addItem(action) {
-    try {
-        yield axios.post('/api/shelf', action.payload)
-        yield put({type: 'GET_SHELF'});
+  try {
+    yield axios.post('/api/shelf', action.payload)
+    yield put({ type: 'GET_SHELF' });
 
-    } catch (error) {
-        console.log(error);
-    }
+  } catch (error) {
+    console.log(error);
+  }
 }
 
-function* shelfSaga (){
-    yield takeEvery('ADD_ITEM', addItem)
-    yield takeEvery('GET_SHELF', getShelf);
+function* deleteItem(action) {
+  const id = action.payload;
+  console.log('saga deleteItem func id:', id);
+  try {
+    yield axios.delete(`/api/shelf/${id}`)
+    yield put({ type: 'GET_SHELF' })
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+function* shelfSaga() {
+  yield takeEvery('ADD_ITEM', addItem);
+  yield takeEvery('GET_SHELF', getShelf);
+  yield takeEvery('DELETE_ITEM', deleteItem);
 }
 
 export default shelfSaga;
